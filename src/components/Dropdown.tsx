@@ -5,17 +5,31 @@ import {
   FocusEvent,
   MouseEvent,
 } from "react";
-import { OrderBy } from "@/apis/apis.type";
 import "./Dropdown.css";
 
-interface Props {
-  onSelect: (value: OrderBy) => void;
-  children: ReactElement[];
+interface DropdownProps<Option> {
+  onSelect: (value: Option) => void;
+  children: ReactElement<{ value: Option; children: string }, "option">[];
 }
 
-export default function Dropdown({ onSelect, children }: Props) {
+export default function Dropdown<Option extends string>({
+  onSelect,
+  children,
+}: DropdownProps<Option>) {
+  if (!hasValidChildren()) throw new Error("Invalid Children");
+
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [value, setValue] = useState<OrderBy>(children[0].props.value);
+  const [value, setValue] = useState<Option>(children[0].props.value);
+
+  function hasValidChildren() {
+    return (
+      children.length > 0 &&
+      children.every(
+        (child) =>
+          child.type === "option" && child.props.value && child.props.children
+      )
+    );
+  }
 
   const handleSelectClick = () => {
     setIsActive((prev) => !prev);
@@ -25,7 +39,7 @@ export default function Dropdown({ onSelect, children }: Props) {
     setIsActive(false);
   };
   const handleOptionClick = (e: MouseEvent<HTMLButtonElement>) => {
-    setValue(e.currentTarget.value as OrderBy);
+    setValue(e.currentTarget.value as Option);
     setIsActive(false);
   };
 

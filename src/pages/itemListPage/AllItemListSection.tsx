@@ -16,7 +16,6 @@ export default function AllItemListSection() {
     page: 1,
     pageSize: pageSizeTable[media],
     orderBy: "recent",
-    keyword: undefined,
   });
   const { isLoading, error, data } = useApi<GetProductsParams, GetProductsRes>(
     getProducts,

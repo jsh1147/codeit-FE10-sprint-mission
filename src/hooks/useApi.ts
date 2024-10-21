@@ -1,7 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
-import { Obj } from "@/apis/apis.type";
 
-export function useApi<Params extends Obj, Response extends Obj>(
+export function useApi<Params extends object, Response extends object>(
   fetchFunc: (paramObj: Params) => Promise<Response>,
   paramObj: Params
 ) {
@@ -17,9 +16,10 @@ export function useApi<Params extends Obj, Response extends Obj>(
         const result = await fetchFunc(paramObj);
         setData(result);
       } catch (e) {
-        const error = e as Error;
-        setError(error);
-        console.error(error.message);
+        if (e instanceof Error) {
+          setError(e);
+          console.error(e.message);
+        }
       } finally {
         setIsLoading(false);
       }

@@ -1,28 +1,28 @@
-export type Obj = Record<string, unknown>;
-
 export type StringObj = Record<string, string>;
 
-export type OrderBy = "recent" | "favorite";
+export type OrderByType = "recent" | "favorite";
 
-export interface GetProductsParams extends Obj {
+export interface GetProductsParams {
   page: number;
   pageSize: number;
-  orderBy: OrderBy;
+  orderBy: OrderByType;
   keyword?: string;
 }
 
-export interface GetProductsRes extends Obj {
+interface ProductProps {
+  createdAt: string;
+  favoriteCount: number;
+  ownerNickname: string;
+  ownerId: number;
+  images: string[];
+  tags: string[];
+  price: number;
+  description: string;
+  name: string;
+  id: number;
+}
+
+export interface GetProductsRes {
   totalCount: number;
-  list: {
-    createdAt: string;
-    favoriteCount: number;
-    ownerNickname: string;
-    ownerId: number;
-    images: string[];
-    tags: string[];
-    price: number;
-    description: string;
-    name: string;
-    id: number;
-  }[];
+  list: ProductProps[];
 }

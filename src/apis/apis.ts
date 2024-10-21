@@ -22,8 +22,8 @@ export async function getProducts({
     page: String(page),
     pageSize: String(pageSize),
     orderBy,
+    ...(keyword && { keyword }),
   };
-  if (keyword) paramObj.keyword = keyword;
   url.search = String(new URLSearchParams(paramObj));
 
   const response = await fetch(url);

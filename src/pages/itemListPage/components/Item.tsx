@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import heartIcon from "@/assets/heart_inactive.svg";
 import "./Item.css";
 
-interface Props {
+interface ItemProps {
   data: {
     id: number;
     name: string;
@@ -13,7 +13,7 @@ interface Props {
   };
 }
 
-export default function Item({ data }: Props) {
+export default function Item({ data }: ItemProps) {
   const { id, name, description, price, images, favoriteCount } = data;
   return (
     <Link className="item" to={`/items/${id}`}>

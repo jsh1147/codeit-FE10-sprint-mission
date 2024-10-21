@@ -20,7 +20,7 @@ const calcPageArray = (totalPage: number, currentPage: number): number[] => {
     .map((start, idx) => start + idx);
 };
 
-interface Props {
+interface PaginationBarProps {
   totalPage: number;
   currentPage: number;
   onChange: (value: number) => void;
@@ -30,7 +30,7 @@ export default function PaginationBar({
   totalPage,
   currentPage,
   onChange,
-}: Props) {
+}: PaginationBarProps) {
   const pageArray = useMemo(
     () => calcPageArray(totalPage, currentPage),
     [totalPage, currentPage]
